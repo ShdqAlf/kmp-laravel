@@ -29,8 +29,8 @@
         .screen {
             background: linear-gradient(90deg, #5D54A4, #7C78B8);
             position: relative;
-            height: 600px;
-            width: 360px;
+            height: 650px;
+            width: 540px;
             box-shadow: 0px 0px 24px #5C5696;
         }
 

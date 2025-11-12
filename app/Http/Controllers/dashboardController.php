@@ -11,6 +11,8 @@ use App\Models\pengumpulanLkpd;
 use App\Models\NilaiPretest;
 use App\Models\NilaiPostest;
 use App\Models\nilaiLkpd;
+use App\Models\Kehadiran;
+use Carbon\Carbon;
 use Auth;
 
 use Illuminate\Http\Request;
@@ -24,6 +26,9 @@ class dashboardController extends Controller
 
         // Ambil data siswa
         $student = $user;
+
+        // Cek apakah siswa sudah hadir hari ini
+        $hadirHariIni = Kehadiran::checkAttendance($student->id);
 
         // Pretest status dan nilai
         $pretestScore = NilaiPretest::where('user_id', $student->id)->value('score');
@@ -51,6 +56,9 @@ class dashboardController extends Controller
         $students = User::where('role', 'siswa')->get();
 
         $students = $students->map(function ($student) use ($courses) {
+            $hadirHariIni = Kehadiran::checkAttendance($student->id);
+            $student->status_kehadiran = $hadirHariIni ? '✅' : '❌';
+
             $answeredPretest = JawabanPretest::where('user_id', $student->id)->exists();
             $student->status_pengisian_pretest = $answeredPretest ? 'Sudah Mengisi' : 'Belum Mengisi';
 
@@ -111,7 +119,7 @@ class dashboardController extends Controller
             })->toArray();
         }
 
-        return view('dashboard.dashboard', compact('courses', 'events', 'students', 'jumlahBelumPretest', 'jumlahBelumPostest', 'jumlahBelumLkpd', 'student'));
+        return view('dashboard.dashboard', compact('courses', 'events', 'students', 'jumlahBelumPretest', 'jumlahBelumPostest', 'jumlahBelumLkpd', 'student', 'hadirHariIni'));
     }
 
     private function hasSubmittedPretest($userId)
@@ -148,5 +156,18 @@ class dashboardController extends Controller
 
         // Redirect back with a success message
         return redirect()->route('dashboard')->with('success', 'Kegiatan berhasil ditambahkan.');
+    }
+
+    public function markAttendance(Request $request)
+    {
+        $user = auth()->user();
+
+        Kehadiran::create([
+            'user_id' => $user->id,
+            'status_kehadiran' => 'Hadir',
+            'tanggal_masuk' => Carbon::today(),
+        ]);
+
+        return redirect()->route('dashboard')->with('success', 'Kehadiran berhasil dicatat.');
     }
 }

@@ -69,7 +69,13 @@
                         <li class="sidebar-item">
                             <a href="{{ route('leaderboard') }}" class='sidebar-link'>
                                 <i class="bi bi-award"></i>
-                                <span>Leaderboard</span>
+                                <span>Rekap Nilai</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('kelolamanualbook') }}" class='sidebar-link'>
+                                <i class="bi bi-book-half"></i>
+                                <span>Kelola Manual Book</span>
                             </a>
                         </li>
                         @endif
@@ -107,6 +113,12 @@
                             <a href="{{ route('leaderboard') }}" class='sidebar-link'>
                                 <i class="bi bi-award"></i>
                                 <span>Leaderboard</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="" class='sidebar-link'>
+                                <i class="bi bi-book-half"></i>
+                                <span>Manual Book</span>
                             </a>
                         </li>
                         @endif

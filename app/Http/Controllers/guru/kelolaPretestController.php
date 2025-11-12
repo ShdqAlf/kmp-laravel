@@ -17,12 +17,13 @@ class kelolaPretestController extends Controller
     public function store(Request $request)
     {
         $course_id = $request->course_id;
-        $request->validate([
-            'pretest' => 'required|string|max:255',
-        ]);
+        $pretest = $request->pretest;
+        // $request->validate([
+        //     'pretest' => 'required|string|max:255',
+        // ]);
 
         Pretest::create([
-            'soal_pretest' => $request->pretest,
+            'soal_pretest' => $pretest,
             'course_id' => $course_id
         ]);
 

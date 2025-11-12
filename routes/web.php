@@ -12,6 +12,8 @@ use App\Http\Controllers\guru\kelolaPretestController;
 use App\Http\Controllers\guru\penilaianLkpdController;
 use App\Http\Controllers\guru\penilaianPretestController;
 use App\Http\Controllers\guru\penilaianPostestController;
+use App\Http\Controllers\guru\kelolaManualController;
+use App\Http\Controllers\guru\kelolaKelompokController;
 use App\Http\Controllers\siswa\coursesController;
 use App\Http\Controllers\siswa\pretestController;
 use App\Http\Controllers\siswa\PostestController;
@@ -32,6 +34,7 @@ use App\Http\Controllers\siswa\PostestController;
 Route::get('/', [authController::class, 'login'])->name('login');
 Route::get('dashboard', [dashboardController::class, 'dashboard'])->name('dashboard');
 Route::post('store-event', [dashboardController::class, 'storeEvent'])->name('storeEvent');
+Route::post('/mark-attendance', [dashboardController::class, 'markAttendance'])->name('markAttendance');
 
 Route::post('login', [authController::class, 'authenticate'])->name('authenticate');
 Route::get('logout', [authController::class, 'logout'])->name('logout');
@@ -76,6 +79,11 @@ Route::delete('kelolapostest/delete/{id}', [kelolaPostestController::class, 'del
 Route::get('penilaianpostest', [penilaianPostestController::class, 'penilaianpostest'])->name('penilaianpostest');
 Route::get('lihatJawabanPostest/{user_id}', [penilaianPostestController::class, 'lihatJawabanPostest'])->name('lihatJawabanPostest');
 Route::post('penilaianpostest/{user_id}/simpan-nilai', [penilaianPostestController::class, 'storeScore'])->name('storeScorePostest');
+// Kelola Kelompok
+Route::get('kelolakelompok', [kelolaKelompokController::class, 'kelolaKelompok'])->name('kelolakelompok');
+Route::post('kelolakelompok/store', [kelolaKelompokController::class, 'store'])->name('storekelompok');
+// Kelola Manual Book
+Route::get('kelolamanualbook', [kelolaManualController::class, 'kelolaManual'])->name('kelolamanualbook');
 
 // Route Siswa
 // Courses
